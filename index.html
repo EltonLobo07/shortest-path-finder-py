@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Shortest path finder</title>
+	<style type="text/css">
+		.center {
+			display: block;
+			margin-left: auto;
+			margin-right: auto;
+			max-width: 100%;
+		}
+		body {
+			font-family: arial;
+		}
+	</style>
+</head>
+<body>
+	<h1 align="center">Shortest path finder</h1>
+	<hr>
+	<section>
+		<h2>Problem</h2>
+		<p>Given a start cell and a destination cell on a grid, find the shortest path from the start cell to the destination cell, if possible. There may or may not be obstacle cells in between the shortest path.</p>
+	</section>
+	<hr>
+	<section>
+		<h2>Guide</h2>
+		<p>Initially, a blank grid is displayed as shown below.</p>
+		<img src="images/img1.png" alt="start screen" width="550" height="550" class="center">
+
+		<p>First mouse left click on any cell changes the cell to be the start cell (the cell color changes to orange). The second mouse left click on any cell changes the cell to be the destination cell (the cell color changes to light blue). <strong>Second mouse left click on the start cell won't change it to the destination cell. </strong> After choosing the start and the destination cell, mouse left clicks can be used to set up obstacle cells (the obstacle cells are assigned black color). <strong>Start and destination cells can't be changed to obstacle cells. </strong>An example of how the screen would look like after selecting start, destination and obstacle cells is shown below.</p>
+		<img src="images/img2.png" alt="start, destination and obstacles placed on the grid" width="550" height="550" class="center">
+
+		<p>At the bottom of the grid, there are 2 buttons. The left button is to select Dijkstra's single source shortest path algorithm and the right button is to select A star algorithm. White color on a button indicates that particular algorithm is selected. <strong>By default Dijkstra's single source shortest path algorithm is selected.</strong></p>
+
+		<p>Once the start, destination, obstacle cells and the desired algorithm is selected, press SPACEBAR key to start running the selected algorithm. As the program runs, the cells which are explored are colored green and the cells that are in the min heap are colored red. Shown below is an example of running Dijkstra's single source shortest path algorithm.</p>
+		<iframe width="550" height="550" src="https://www.youtube.com/embed/hXjPUI9TTEE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" class="center" allowfullscreen></iframe>
+
+		<p>Shown below is an example of running A star algorithm.</p>
+		<iframe width="550" height="550" src="https://www.youtube.com/embed/mfeUHHcnhJs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" class="center" allowfullscreen></iframe>
+
+		<p>Start, destination and obstacle cells can be changed to blank cells by using mouse right clicks. Mouse right click on the start or destination or obstacle cell to reset that cell. If you reset the start cell or the destination cell, the next mouse left click on any cell will change the selected cell to be the start or the destination cell. An example shown below.</p>
+		<iframe width="550" height="550" src="https://www.youtube.com/embed/WEdpqp8KjCQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" class="center" allowfullscreen></iframe>
+
+		<p>If you want to reset the grid, that is, change the grid to be a blank grid like the intially screen, press Left CTRL key.</p>
+		<p><strong>NOTE: Once visualization started, using Left CTRL key, SPACEBAR key, mouse right click and mouse left click won't work until the visualization is completed.</strong></p>
+
+		<p>If you want to create a random grid of obstacle cells, press g key. The g key resets the grid and changes every cell to be obstacle cell. Then DFS is used to randomly reset some cells. Then, place the start and destination cell anywhere, select the desired algorithm using the bottom buttons and start the selected algorithm. An example shown below.</p>
+		<iframe width="550" height="550" src="https://www.youtube.com/embed/Pd9l7FAJBcU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" class="center" allowfullscreen></iframe>
+
+		<p>Sometimes there can be a situation where there is no path from the start cell to the destination cell. In this case, the algorithm explores all possible cells and stops after all the reachable cells are explored. An example shown below.</p>
+		<iframe width="550" height="550" src="https://www.youtube.com/embed/IUeFSVPAgQ4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" class="center" allowfullscreen></iframe>
+	</section>
+	<hr>
+	<section>
+		<h2>Important points</h2>
+		<ul>
+			<li>Simple Depth First Search to find the shortest path</li>
+			<p>
+				DFS can be used. However, to find the shortest path from the start cell, every cell will have to visit all of it's neighboring cells before making a decision on which neighbor to select to minimize the cost of the path from the start to the destination cell which makes it inefficient for this task. 
+			</p>
+			<li>Simple Breadth First Search to find the shortest path</li>
+			<p>
+				Considering the underlying graph structure to be a directed unweighted graph and using BFS on it will work for this task. The reason why simple BFS is not included in this visualizaton is because of Dijkstra's single source shortest path algorithm which behaves like a simple BFS for this graph structure. This is because neighbors of a cell are connected to the cell with an edge weight of 1. Implementing a simple BFS will change nothing visually and hence, simple BFS is not implemented for this visualization. 
+			</p>
+			<li>Type of Dijkstra's shortest path algorithm implemented</li>
+			<p>I have used the lazy implementation of Dijkstra's shortest path algorithm using a min heap. The implementation is called lazy implementation because of storing outdated tuples in the min heap and then ignoring those tuples once popped from the min heap. However, there are many better implementations of Dijkstra's shortest path algorithm. All of these are explained in a YouTube video I referred to (will be listed under references).</p>
+			<li>Heuristic used for A star algorithm</li>
+			<p>The choice of heuristic determines whether the shortest path found by A star is actually correct. For A star algorithm to find the shortest path, the heuristic function needs to be admissible. A heuristic function is said to be admissible if it never overestimates the cost of reaching the goal, i.e. the cost it estimates to reach the goal is not higher than the lowest possible cost from the current point in the path. Euclidean distance as heuristic function is used for this visualization. For the graph structure used in the visualization, Euclidean distance underestimates the actual distance from a cell to the destination cell. Manhattan distance is also a good heuristic to use for this visualization. For more information, read the article listed under references.</p>
+		</ul>
+	</section>
+	<hr>
+	<section>
+		<h3>Code</h3>
+		<a href="">Python code</a>
+	</section>
+	<hr>
+	<section>
+		<h2>References</h2>
+		<ul>
+			<li><a href="https://www.youtube.com/watch?v=JtiK0DOeI4A" target="_blank">Video explanation - Implementing A star in python using pygame</a></li>
+			<li><a href="https://www.youtube.com/watch?v=XB4MIexjvY0" target="_blank">Video explanation - Dijkstra's single source shortest path algorithm</a></li>
+			<li><a href="https://www.youtube.com/watch?v=pSqmAO-m7Lk" target="_blank">Video explanation - How to improve Dijkstra's single source shortest path naive implementation</a></li>
+			<li><a href="https://www.youtube.com/watch?v=eSOJ3ARN5FM" target="_blank">Video explanation - A star algorithm</a></li>
+			<li><a href="https://brilliant.org/wiki/a-star-search/" target="_blank">Good article to read to understand A star algorithm</a></li>
+			<li><a href="https://youtube.com/playlist?list=PLDV1Zeh2NRsCLFSHm1nYb9daYf60lCcag" target="_blank">Video series - Priority queue</a></li>
+		</ul>
+	</section>
+</body>
+</html>
